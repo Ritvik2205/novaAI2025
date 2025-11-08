@@ -177,7 +177,7 @@ class AgentOrchestrator:
                 group = self.repository.upsert_student_group(company.id, name=name, data=data)
                 created_groups.append(group.model_dump(mode="json"))
         if created_groups:
-            payload["student_groups"] = created_groups
+            company.student_groups = created_groups
 
         if analysis.get("tags"):
             tags = set(company.tags)
@@ -515,6 +515,8 @@ class AgentOrchestrator:
             lead_updates = monitor_summary.get("lead_updates") or {}
             if lead_updates.get("status"):
                 lead.status = lead_updates["status"]
+                if str(lead.status).lower() in {"won", "contracted", "signed"}:
+                    lead.metadata["quote_acceptance"] = "yes"
             preferences_update = lead_updates.get("preferences")
             if preferences_update:
                 self._merge_preferences(lead.preferences, preferences_update)
@@ -559,14 +561,22 @@ class AgentOrchestrator:
                 except Exception as exc:  # pragma: no cover - scheduling fallback
                     logger.warning("Automated scheduling failed for lead %s: %s", lead_id, exc)
 
-            if not quote_payload and monitor_summary.get("quote"):
-                quote_info = monitor_summary["quote"]
-                if quote_info and quote_info.get("price"):
-                    quote_payload = self._persist_quote(company_id, lead, quote_info)
+            quote_info = monitor_summary.get("quote") or {}
+            if not quote_payload and quote_info.get("price"):
+                quote_payload = self._persist_quote(company_id, lead, quote_info)
+            if quote_info:
+                status_token = str(quote_info.get("status", "")).lower()
+                accepted_flag = quote_info.get("accepted")
+                if (
+                    accepted_flag is True
+                    or status_token in {"accepted", "approved", "agreed"}
+                    or str(quote_info.get("decision", "")).lower() in {"accept", "accepted"}
+                ):
+                    lead.metadata["quote_acceptance"] = "yes"
 
             lead.metadata["monitor_snapshot"] = json.dumps(monitor_summary)
 
-        accepted = lead.metadata.get("quote_acceptance") == "yes"
+        accepted = self._is_quote_accepted(lead)
         if self._message_signals_acceptance(incoming_message):
             accepted = True
             lead.metadata["quote_acceptance"] = "yes"
@@ -579,6 +589,7 @@ class AgentOrchestrator:
                 latest_message=incoming_message,
                 rag_context=rag_context,
             )
+            recommendations = self._ensure_signature_groups(company_id, recommendations)
 
         self.repository.update_lead(lead)
 
@@ -706,6 +717,34 @@ class AgentOrchestrator:
             return set()
         return {token for token in re.findall(r"[a-zA-Z]+", text.lower()) if len(token) > 2}
 
+    def _ensure_signature_groups(
+        self, company_id: str, current: List[StudentGroup]
+    ) -> List[StudentGroup]:
+        groups = self.repository.list_student_groups(company_id)
+        if not groups:
+            return current
+        name_map = {group.name.lower(): group for group in groups}
+
+        signature_names = [
+            "jake paul",
+            "thomas kanz",
+        ]
+        ordered: List[StudentGroup] = []
+        seen: set[str] = set()
+
+        for signature in signature_names:
+            match = name_map.get(signature)
+            if match:
+                ordered.append(match)
+                seen.add(match.id)
+
+        for group in current:
+            if group.id not in seen:
+                ordered.append(group)
+                seen.add(group.id)
+
+        return ordered[:3]
+
     def _merge_preferences(self, current: Dict[str, str], updates: Any) -> None:
         if isinstance(updates, dict):
             for key, value in updates.items():
@@ -715,6 +754,17 @@ class AgentOrchestrator:
                 current[f"pref_{idx}"] = str(item)
         else:
             current["summary"] = str(updates)
+
+    def _is_quote_accepted(self, lead: LeadProfile) -> bool:
+        if lead.metadata.get("quote_acceptance") == "yes":
+            return True
+        status = (lead.status or "").lower()
+        if status in {"won", "contracted", "signed"}:
+            return True
+        decision = (lead.metadata.get("handoff_decision") or "").lower()
+        if decision == "send":
+            return True
+        return False
 
     def _message_signals_acceptance(self, latest_message: str) -> bool:
         message = (latest_message or "").lower()
@@ -731,6 +781,13 @@ class AgentOrchestrator:
             "proceed",
             "yes please",
             "looks good",
+            "works for me",
+            "that works",
+            "i accept",
+            "i agree",
+            "deal",
+            "lock it in",
+            "let's move forward",
         ]
         return any(keyword in message for keyword in acceptance_keywords)
 
@@ -756,11 +813,18 @@ class AgentOrchestrator:
     def _seed_student_groups(self, company_id: str) -> None:
         existing_groups = self.repository.list_student_groups(company_id)
         if existing_groups:
-            if all(group.profile_image_url and group.profile_image_url.startswith("data:") for group in existing_groups):
+            has_jake = any(group.name.lower().startswith("jake paul") for group in existing_groups)
+            if has_jake and len(existing_groups) >= 21 and all(
+                group.profile_image_url and group.profile_image_url.startswith("data:") for group in existing_groups
+            ):
                 return
             self.repository.remove_student_groups(company_id)
         base_dir = Path(__file__).resolve().parents[2]
-        people_dir = base_dir / "frontend" / "dist" / "assets"
+        people_dir = base_dir / "frontend" / "dist" / "assets" / "people"
+        if not people_dir.exists():
+            legacy_dir = base_dir / "People"
+            if legacy_dir.exists():
+                people_dir = legacy_dir
         csv_path = people_dir / "sample_staff.csv"
         if not csv_path.exists():
             logger.warning("sample_staff.csv not found; skipping student group seeding.")
@@ -771,6 +835,20 @@ class AgentOrchestrator:
             rows = list(reader)
         if not rows:
             return
+
+        # Ensure a dedicated 21st Jake Paul group exists
+        if len(rows) < 21:
+            logger.warning("sample_staff.csv contains fewer than 21 rows; expected at least 21 entries.")
+        jake_prototype = dict(rows[0])
+        extra_jake = {
+            "name": f"{jake_prototype.get('name', 'Jake Paul').strip()} Collective",
+            "specialty": jake_prototype.get("specialty", "Treehouse Architecture"),
+            "pros": jake_prototype.get("pros", "Signature elevated living spaces"),
+            "cons": jake_prototype.get("cons", "prefers premium materials"),
+            "wage": jake_prototype.get("wage", "100"),
+            "location": jake_prototype.get("location", "local"),
+        }
+        rows.insert(0, extra_jake)
 
         image_order: List[Optional[Path]] = []
         primary = people_dir / "jakePaul.png"
@@ -783,6 +861,10 @@ class AgentOrchestrator:
                     matched = candidate
                     break
             image_order.append(matched)
+        if rows and primary.exists():
+            image_order[0] = primary
+            if len(image_order) > 1:
+                image_order[1] = primary
 
         for index, row in enumerate(rows):
             name = row.get("name", "Unnamed Group").strip()

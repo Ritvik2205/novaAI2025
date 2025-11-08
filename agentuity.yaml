@@ -1,0 +1,28 @@
+version: ">=0.1.0"
+project_id: "proj_scottylabs_crm"
+name: "ScottyLabs Agentic CRM"
+description: "Agentic orchestrator for ScottyLabs student group collaborations"
+
+development:
+  port: 8787
+  watch:
+    enabled: true
+    files:
+      - "backend/**/*.py"
+      - "agentuity_agents/**/*.py"
+
+deployment:
+  resources:
+    memory: "1Gi"
+    cpu: "1000m"
+
+bundler:
+  language: "python"
+  runtime: "python"
+  agents:
+    dir: "agentuity_agents"
+
+agents:
+  - id: "agent_scottylabs_orchestrator"
+    name: "ScottyLabs Orchestrator"
+    description: "Routes onboarding, lead, and knowledge actions for the student-group CRM"

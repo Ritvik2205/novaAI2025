@@ -1,0 +1,14 @@
+Flask
+Flask-Cors
+chromadb
+pydantic
+pydantic-settings
+python-dotenv
+requests
+httpx
+beautifulsoup4
+trafilatura
+xmltodict
+sentence-transformers
+numpy
+scikit-learn

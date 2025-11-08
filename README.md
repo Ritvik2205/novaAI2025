@@ -1,189 +1,142 @@
-# NOVA Multi-Tenant RAG Platform
+# ScottyLabs Agentic CRM
 
-Production-focused Retrieval-Augmented Generation stack for construction businesses. It ingests websites and uploaded files, labels and chunks content, indexes with hybrid dense/BM25 search, answers questions with citations, and qualifies/captures leads with quote ranges backed by a deterministic price book.
+Agentic CRM for ScottyLabs that learns how the organization matches student teams with partner projects, captures institutional knowledge, and routes inbound leads. The system is composed of:
 
-## Features
-- Multi-tenant FastAPI service with API-key auth.
-- Website crawler (robots-aware, optional Playwright rendering) plus PDF/DOCX/PPTX/CSV parsers.
-- Layout-aware chunking, MinHash dedupe, multi-label classifier with LLM fallback.
-- Hybrid retrieval (Elasticsearch BM25 + pgvector dense) with optional cross-encoder re-rank.
-- Q&A and Lead/Quote agents with guardrails, CRM/email/calendar adapters, PDF quote generation.
-- Celery ingestion workers, Redis queue/cache, Postgres 16 + pgvector, Elasticsearch 8.
-- Price book rules engine with construction seed data.
-- GitHub Actions CI (flake8 + pytest) and Dockerized deployment.
+- **Chat-style onboarding** – an AI concierge interviews ScottyLabs staff, requests documents, and writes to the knowledge base in real time.
+- **Student group directory** – auto-generated profiles (focus areas, past work, availability, contacts) used for smart stakeholder matching.
+- **Knowledge curation** – agents segment onboarding output into shareable or internal-only sections.
+- **Lead board** – concierge + monitor agents qualify partner enquiries and progress them through new → engaged → qualified → quoted → won/lost.
+- **Agentuity deployment** – the orchestrator can be hosted as a long-running Agentuity agent with built-in scaling, logging, and routing.
+
+---
 
 ## Quickstart
-```bash
-make bootstrap
-```
-`make bootstrap` (see snippet below) provisions a virtual environment, installs dependencies + Playwright browsers, copies `.env`, runs migrations, seeds demo data, and starts docker-compose (Postgres, Elasticsearch, Redis, API, worker).
 
-### Manual Steps
-1. **Environment**
+### 1. Install dependencies
+```bash
+cd /Users/ritvikgupta/NOVA
+python -m venv .venv
+source .venv/bin/activate
+pip install -r backend/requirements.txt
+cd frontend
+pnpm install    # or npm install
+```
+
+### 2. Environment variables (`.env` at repo root)
+```bash
+OPENROUTER_API_KEY=...
+AGENTUITY_API_KEY=...
+AGENTUITY_BASE_URL=https://api.agentuity.com/v1
+```
+Optional overrides: `OPENROUTER_BASE_URL`, `OPENROUTER_DEFAULT_MODEL`, `CALENDAR_PROVIDER`, `CALENDAR_CREDENTIALS_PATH`.
+
+### 3. Run locally
+```bash
+# Flask backend (API + RAG services)
+python main.py
+
+# Frontend (React dashboard with Vite)
+cd frontend
+pnpm dev
+```
+Visit `http://localhost:5173` to access the multi-page console.
+
+---
+
+## Operator Console
+
+| Page | Purpose |
+|------|---------|
+| **Onboarding chat** | Conversational UI that collects ScottyLabs knowledge, requests documents, and stores everything in the RAG store. Transcript is preserved and documents can be uploaded inline per question. |
+| **Student groups** | Directory of all student teams discovered during onboarding, including expertise, recent projects, availability, and contacts. |
+| **Knowledge base** | An agent reorganises captured information into sections. Operators decide which sections remain internal before saving visibility preferences. |
+| **Lead board** | Pipeline view grouped by status (new, engaged, qualified, quoted, won, archived) driven by the action-monitoring agent’s structured updates. |
+
+---
+
+## Key API Endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| `POST /api/company/session` | (Re)starts ScottyLabs onboarding; generates chat questions and kicks off crawling. |
+| `POST /api/company/session/<session_id>/answer` | Streams answers back to the onboarding agent and accumulates insights, student groups, and document requests. |
+| `POST /api/company/<id>/documents` | Uploads supporting assets (used by the chat UI). |
+| `GET /api/company/<id>/groups` | Returns the student group directory. |
+| `GET /api/company/<id>/knowledge/sections` | Invokes the knowledge architect agent to section the knowledge base. |
+| `POST /api/company/<id>/knowledge/visibility` | Saves which sections should stay internal. |
+| `POST /api/leads/message` | Handles inbound partner messages (auto-selects ScottyLabs if `company_id` omitted). |
+| `GET /api/leads?company_id=<id>` | Lists leads for the pipeline view. |
+
+All responses are JSON; 400/404 errors return `{ "error": "..." }`.
+
+---
+
+## Agentuity Deployment
+
+The repository is ready for Agentuity.
+
+- `agentuity.yaml` – project metadata, bundler configuration, and agent list.
+- `agentuity_agents/scottylabs_orchestrator/agent.py` – Agentuity entry point wrapping the orchestrator.
+
+### Deploy
+1. Install the Agentuity CLI and authenticate:
    ```bash
-   python3.12 -m venv .venv
-   source .venv/bin/activate
-   pip install -e ".[dev]"
-   playwright install --with-deps chromium
-   cp .env.example .env
+   curl -fsSL https://get.agentuity.com/cli.sh | bash
+   agentuity login
    ```
-2. **Migrations**
+2. Export project keys:
    ```bash
-   alembic upgrade head
+   export AGENTUITY_SDK_KEY=...
+   export AGENTUITY_PROJECT_KEY=...
    ```
-3. **Seed price book**
+3. Deploy:
    ```bash
-   python scripts/seed_pricebook.py demo-construction pricebook/construction_pricebook.json
+   agentuity deploy
    ```
-4. **Run services**
+4. Invoke the hosted agent:
    ```bash
-   docker compose -f docker/docker-compose.yaml up --build
+   agentuity invoke agent_scottylabs_orchestrator --json '{
+     "action": "start_onboarding",
+     "data": {"name": "ScottyLabs"}
+   }'
    ```
-   - API available on `http://localhost:8000`
-   - Celery worker defined in compose file.
+   Supported actions: `start_onboarding`, `answer_onboarding`, `handle_lead`, `knowledge_sections`, `update_visibility`, `list_groups`, `list_leads`.
 
-### FastAPI local dev (no containers)
-```bash
-uvicorn app.main:app --reload
+---
+
+## Project Layout
+
+```
+backend/
+  agents/               # Pydantic-based agents (onboarding, lead concierge, quote, monitor)
+  repositories/         # JSON persistence (companies, student groups, leads, meetings, quotes)
+  services/             # OpenRouter client, Agentuity client, RAG service, scheduler
+  routers/              # Flask blueprints for company + lead APIs
+frontend/
+  src/components/
+    CompanyConsole.tsx  # Multi-page operator console
+    OnboardingWizard.tsx# Chat-style onboarding interface
+    LeadBoard.tsx       # Pipeline view by status
+agentuity_agents/
+  scottylabs_orchestrator/agent.py  # Agentuity runtime entry point
 ```
 
-Celery worker:
-```bash
-celery -A app.ingest.pipeline.celery_app worker --loglevel=info
-```
+---
 
-## Environment Variables
-| Key | Default | Notes |
-| --- | --- | --- |
-| `OPENAI_API_KEY` | empty | required for OpenAI providers |
-| `DATABASE_URL` | `postgresql+psycopg://postgres:postgres@db:5432/nova` | pgvector enabled |
-| `ELASTIC_URL` | `http://elastic:9200` | Elasticsearch 8 |
-| `REDIS_URL` | `redis://redis:6379/0` | broker + cache |
-| `PLAYWRIGHT_BROWSE` | `0` | enable JS rendering |
-| `EMBEDDING_PROVIDER` | `openai` | or `local` |
-| `RERANK_ENABLED` | `true` | enable cross-encoder |
-| `MAX_REFUND_CAP` | `5000` | guardrails |
-| `MAX_QUOTE_CAP` | `250000` | guardrails |
-| `DEFAULT_TIMEZONE` | `America/Los_Angeles` | scheduling |
-| `API_HOST` | `http://api:8000` | workers hitting API |
+## Tooling & Testing
 
-See `.env.example` for full list & documentation.
+- `python -m compileall backend agentuity_agents` – quick syntax check.
+- `pnpm lint` / `pnpm build` – frontend validation.
+- `agentuity deploy --dry-run` – validate Agentuity packaging without deploying.
 
-## API Overview
-All endpoints require `X-API-Key` (except tenant creation). JSON errors follow `{ "detail": "message" }`.
+---
 
-### 1. Create Tenant / API Key
-```bash
-curl -X POST http://localhost:8000/v1/tenants \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Demo Construction","region":"west"}'
-```
-Response: `{ "tenant_id": 1, "api_key": "..." }`
+## Next Steps
 
-### 2. Launch Website Ingest
-```bash
-curl -X POST http://localhost:8000/v1/ingest/website \
-  -H "X-API-Key: <key>" \
-  -H "Content-Type: application/json" \
-  -d '{"tenant_id":1,"start_url":"https://example.com"}'
-```
-Returns `{ "job_id": "uuid" }`. Job status via `GET /v1/ingest/job/{job_id}`.
+- Support direct document ingestion via Agentuity (base64 payloads) in addition to HTTP uploads.
+- Add analytics dashboards for student group utilisation and win/loss trends.
+- Integrate real calendar providers inside `CalendarService`.
 
-### 3. Upload Files
-```bash
-curl -X POST http://localhost:8000/v1/ingest/upload \
-  -H "X-API-Key: <key>" \
-  -F tenant_id=1 \
-  -F files=@docs/brochure.pdf
-```
+---
 
-### 4. Ask Questions
-```bash
-curl -X POST http://localhost:8000/v1/query \
-  -H "X-API-Key: <key>" \
-  -H "Content-Type: application/json" \
-  -d '{"tenant_id":1,"query":"What warranties do you offer?","top_k":5,"rerank":true}'
-```
-Returns `{ "answer": "...", "citations": [...], "retrieved": [...] }`.
-
-### 5. Lead Capture / Quote
-```bash
-curl -X POST http://localhost:8000/v1/lead/ask \
-  -H "X-API-Key: <key>" \
-  -H "Content-Type: application/json" \
-  -d '{"tenant_id":1,"text":"Need a treehouse by June","dialog_state":{}}'
-```
-Follow with `POST /v1/lead/quote` once slots filled.
-
-### 6. Pricebook Debug
-```bash
-curl -H "X-API-Key: <key>" http://localhost:8000/v1/pricebook/1
-```
-Admins can `POST` to update price rules.
-
-### 7. Auth Check
-```bash
-curl -H "X-API-Key: <key>" http://localhost:8000/v1/auth/ping
-```
-
-## Minimal Postman Collection
-```json
-{
-  "info": {
-    "name": "NOVA RAG API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Create Tenant",
-      "request": {
-        "method": "POST",
-        "header": [{"key":"Content-Type","value":"application/json"}],
-        "body": {"mode":"raw","raw":"{\\"name\\":\\"Demo\\",\\"region\\":\\"west\\"}"},
-        "url": "{{base}}/v1/tenants"
-      }
-    },
-    {
-      "name": "Query",
-      "request": {
-        "method": "POST",
-        "header": [
-          {"key":"X-API-Key","value":"{{api_key}}"},
-          {"key":"Content-Type","value":"application/json"}
-        ],
-        "body": {"mode":"raw","raw":"{\\"tenant_id\\":1,\\"query\\":\\"pricing\\"}"},
-        "url": "{{base}}/v1/query"
-      }
-    }
-  ]
-}
-```
-
-## Tests & CI
-```bash
-pytest
-flake8
-mypy app
-```
-GitHub Actions workflow `.github/workflows/ci.yaml` runs flake8 + pytest across pushes/PRs.
-
-## Sample Data
-- `pricebook/construction_pricebook.json`: Services, materials, adders, etc., used by `scripts/seed_pricebook.py`.
-- `web-sample/`: Three HTML pages for crawler demos and ingest tests.
-
-## Makefile Snippet (optional)
-```makefile
-bootstrap:
-	python3.12 -m venv .venv && . .venv/bin/activate && pip install -e ".[dev]" && \
-	playwright install --with-deps chromium && \
-	cp -n .env.example .env || true && \
-	alembic upgrade head && \
-	python scripts/seed_pricebook.py demo-construction pricebook/construction_pricebook.json && \
-	docker compose -f docker/docker-compose.yaml up --build
-```
-
-## Notes
-- Agents, pipelines, and search helpers are organized under `app/` by domain for clarity.
-- Guardrails middleware masks PII in logs, enforces action caps, and routes policy-sensitive requests.
-- Embedding & LLM providers implement interfaces so you can drop in local models.
-- Retrieval caches embeddings + LLM responses to control cost (Redis-based).
+Questions? Use the Agentuity CLI (`agentuity logs`) or console to observe the orchestrator once deployed.

@@ -506,8 +506,8 @@ html,
 .client-portal-modal {
   position: fixed;
   right: 2.5rem;
-  bottom: 2.5rem;
-  width: min(420px, 90vw);
+  bottom: 2.2rem;
+  width: min(500px, 90vw);
   max-height: 85vh;
   display: flex;
   flex-direction: column;

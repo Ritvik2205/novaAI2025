@@ -309,13 +309,13 @@ class AgentOrchestrator:
 
         rag_context = self.rag.query(company_id, "Summarize key knowledge about ScottyLabs collaborations")["context"]
 
-        context_payload = {
-            "company": company.model_dump(mode="json"),
-            "insights": insights,
-            "student_groups": [group.model_dump(mode="json") for group in groups],
-            "documents": documents,
-            "rag_context": rag_context,
-        }
+        context_payload = self._build_knowledge_context_payload(
+            company=company,
+            insights=insights,
+            groups=groups,
+            documents=documents,
+            rag_context=rag_context,
+        )
 
         system_prompt = (
             "You are a knowledge architect organizing ScottyLabs' onboarding information into reusable sections. "
@@ -345,6 +345,12 @@ class AgentOrchestrator:
         )
         parsed = self._parse_json_payload(completion.get("content", ""))
         sections = parsed.get("sections") or []
+        if not sections:
+            logger.warning(
+                "Knowledge architect returned no sections for company %s; using fallback seed summaries.",
+                company_id,
+            )
+            sections = self._build_fallback_sections(company_id)
 
         normalized: List[Dict[str, Any]] = []
         internal_only_set = {title.lower() for title in internal_only}
@@ -745,6 +751,174 @@ class AgentOrchestrator:
 
         return ordered[:3]
 
+    def _seed_knowledge_base(self, company_id: str) -> None:
+        profile = self.repository.get_company(company_id)
+        if not profile:
+            return
+        already_seeded = profile.metadata.get("knowledge_seeded") == "yes"
+        if already_seeded:
+            sample = self.rag.query(company_id, "ScottyLabs knowledge health check").get("context", [])
+            if sample:
+                return
+            logger.info(
+                "Knowledge seed marked complete for %s but vector store empty; reseeding dummy knowledge.",
+                company_id,
+            )
+
+        base_dir = Path(__file__).resolve().parents[2]
+        knowledge_dir = base_dir / "backend" / "data" / "knowledge"
+        if not knowledge_dir.exists():
+            logger.warning("Knowledge seed folder %s missing; skipping knowledge base seeding.", knowledge_dir)
+            return
+
+        payloads: List[DocumentPayload] = []
+        seed_files = list(sorted(knowledge_dir.glob("*.md"))) + list(sorted(knowledge_dir.glob("*.txt")))
+        for path in seed_files:
+            try:
+                text = path.read_text(encoding="utf-8").strip()
+            except OSError as exc:  # pragma: no cover - filesystem
+                logger.warning("Failed reading knowledge seed %s: %s", path, exc)
+                continue
+            if not text:
+                continue
+            metadata = {
+                "source": "knowledge-seed",
+                "title": path.stem.replace("_", " ").title(),
+                "slug": path.stem,
+            }
+            payloads.append(DocumentPayload(doc_id=f"seed-{path.stem}", text=text, metadata=metadata))
+
+        if not payloads:
+            return
+
+        chunks = self.rag.ingest_documents(company_id, payloads)
+        logger.info("Seeded %s knowledge chunks for company %s", chunks, company_id)
+        if chunks > 0:
+            self.repository.add_company_metadata(company_id, {"knowledge_seeded": "yes"})
+        else:
+            logger.warning("No knowledge chunks ingested for %s; leaving seed flag unset.", company_id)
+
+    def _build_knowledge_context_payload(
+        self,
+        *,
+        company: CompanyProfile,
+        insights: List[str],
+        groups: List[StudentGroup],
+        documents: List[str],
+        rag_context: List[Dict[str, Any]],
+    ) -> Dict[str, Any]:
+        def truncate(text: str, limit: int) -> str:
+            if len(text) <= limit:
+                return text
+            return text[: limit - 3].rstrip() + "..."
+
+        trimmed_company = company.model_dump(mode="json")
+        trimmed_company["description"] = truncate(trimmed_company.get("description") or "", 400)
+
+        trimmed_insights = [truncate(insight, 280) for insight in insights[:12]]
+
+        trimmed_groups: List[Dict[str, Any]] = []
+        for group in groups[:12]:
+            trimmed_groups.append(
+                {
+                    "name": group.name,
+                    "summary": truncate(group.summary or "", 320),
+                    "focus_areas": group.focus_areas[:5],
+                    "hire_rate": group.metadata.get("hire_rate"),
+                    "availability": truncate(group.availability or "", 120),
+                    "notable_projects": [truncate(item, 180) for item in group.past_projects[:3]],
+                }
+            )
+
+        trimmed_documents = documents[:10]
+
+        trimmed_context: List[Dict[str, Any]] = []
+        for chunk in rag_context[:8]:
+            trimmed_context.append(
+                {
+                    "source": chunk.get("source") or chunk.get("url") or "internal",
+                    "text": truncate(chunk.get("text", ""), 900),
+                }
+            )
+
+        return {
+            "company": trimmed_company,
+            "insights": trimmed_insights,
+            "student_groups": trimmed_groups,
+            "documents": trimmed_documents,
+            "rag_context": trimmed_context,
+        }
+
+    def _build_fallback_sections(self, company_id: str) -> List[Dict[str, Any]]:
+        base_dir = Path(__file__).resolve().parents[2]
+        knowledge_dir = base_dir / "backend" / "data" / "knowledge"
+        if not knowledge_dir.exists():
+            return []
+
+        sections: List[Dict[str, Any]] = []
+        seed_files = list(sorted(knowledge_dir.glob("*.md"))) + list(sorted(knowledge_dir.glob("*.txt")))
+        for path in seed_files:
+            try:
+                text = path.read_text(encoding="utf-8").strip()
+            except OSError:  # pragma: no cover - filesystem
+                continue
+            if not text:
+                continue
+
+            lines = [line.strip() for line in text.splitlines() if line.strip()]
+            if not lines:
+                continue
+
+            title_line = lines[0]
+            if title_line.startswith("#"):
+                title = title_line.lstrip("#").strip()
+            else:
+                title = path.stem.replace("_", " ").title()
+
+            paragraphs = [para.strip() for para in text.split("\n\n") if para.strip()]
+            summary_source = paragraphs[0] if paragraphs else text
+            summary_sentences = summary_source.split(". ")
+            summary = ". ".join(summary_sentences[:2]).strip()
+            if summary and not summary.endswith("."):
+                summary += "."
+
+            key_points: List[str] = []
+            for line in lines[1:]:
+                if line.startswith(("-", "*")) or line[:2].isdigit() or line[:2] in {"1.", "2."}:
+                    cleaned = line.lstrip("-*0123456789. ").strip()
+                    if cleaned:
+                        key_points.append(cleaned)
+            if not key_points and len(paragraphs) > 1:
+                fallback_points = paragraphs[1].split(". ")
+                key_points = [point.strip() for point in fallback_points if point.strip()][:4]
+
+            sections.append(
+                {
+                    "title": title or "Knowledge Section",
+                    "summary": summary,
+                    "key_points": key_points,
+                    "recommended_audience": "both",
+                    "share_with_clients": True,
+                }
+            )
+
+        if not sections:
+            return [
+                {
+                    "title": "ScottyLabs Overview",
+                    "summary": "ScottyLabs mobilizes student-led pods to deliver rapid prototypes and agentic automations for partner companies.",
+                    "key_points": [
+                        "Cross-functional pods staffed with product, engineering, and design talent",
+                        "Layered agent stack captures discovery notes, quotes, and schedules",
+                        "Delivery metrics emphasise partner satisfaction and on-time execution",
+                    ],
+                    "recommended_audience": "both",
+                    "share_with_clients": True,
+                }
+            ]
+
+        return sections
+
     def _merge_preferences(self, current: Dict[str, str], updates: Any) -> None:
         if isinstance(updates, dict):
             for key, value in updates.items():
@@ -794,7 +968,9 @@ class AgentOrchestrator:
     def _ensure_default_company(self) -> None:
         existing = self.repository.list_companies()
         if existing:
-            self._seed_student_groups(existing[0].id)
+            company_id = existing[0].id
+            self._seed_student_groups(company_id)
+            self._seed_knowledge_base(company_id)
             return
         profile = self.repository.create_company(
             name="ScottyLabs",
@@ -809,6 +985,7 @@ class AgentOrchestrator:
             },
         )
         self._seed_student_groups(profile.id)
+        self._seed_knowledge_base(profile.id)
 
     def _seed_student_groups(self, company_id: str) -> None:
         existing_groups = self.repository.list_student_groups(company_id)

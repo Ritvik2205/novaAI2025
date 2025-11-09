@@ -12,8 +12,9 @@
         "engagement_definition": "",
         "engagement_success_definition": "Achieving satisfied clients through well-executed software projects",
         "insights": "[\"Focus on building high-quality software\", \"Success measured by client satisfaction\", \"Value placed on delivering complete and effective projects\", \"The stakeholder response is incomplete or unclear.\", \"Stakeholder response did not provide meaningful information about the company's core mission or engagement model.\"]",
+        "knowledge_seeded": "yes",
         "knowledge_visibility": "{\"internal_only\": [\"Operational Insights\"]}",
-        "last_crawl_at": "2025-11-08T21:16:07.844989",
+        "last_crawl_at": "2025-11-09T00:01:13.618045",
         "last_crawl_chunks": "0",
         "last_crawl_pages": "0"
       },
@@ -27,7 +28,7 @@
         "partnership_engagement",
         "mission"
       ],
-      "updated_at": "2025-11-08T21:16:14.032815",
+      "updated_at": "2025-11-09T00:01:13.618060",
       "website": "example.com"
     },
     "1ce2d0097c064d43b86dab45ff6a0cba": {
@@ -375,6 +376,63 @@
       "status": "engaged",
       "updated_at": "2025-11-08T22:50:09.753502"
     },
+    "6df8f2813dbb408fb276c572df54d665": {
+      "action_items": [
+        "Await lead response with project details",
+        "Confirm preferred time slot for intro call",
+        "Await lead's budget and timeline details",
+        "Prepare to schedule discovery call once availability is confirmed",
+        "Await the lead\u2019s confirmation on eco-materials, power integration, or basic recreational build",
+        "Offer to schedule a discovery call if the lead prefers human coordination",
+        "Schedule a discovery call with the lead",
+        "Assign a build coordinator to confirm design and site parameters",
+        "Prepare finalized proposal for signature"
+      ],
+      "company_id": "14c72562b2074982a3c7738d32c70468",
+      "created_at": "2025-11-08T23:53:51.889365",
+      "email": "agentuity@gmail.com",
+      "id": "6df8f2813dbb408fb276c572df54d665",
+      "meetings": [],
+      "metadata": {
+        "assigned_contractor": "Build Coordination Team",
+        "assignment_reason": "They handle onboarding of accepted quotes and coordinate discovery calls for new fabrication projects.",
+        "client_code": "SCOT-8621",
+        "code_shared": "yes",
+        "last_summary": "The lead accepted the preliminary quote for a 100\u202fm\u00b2 rural treehouse project and is ready to proceed to the discovery call stage to finalize materials and structural details.",
+        "monitor_snapshot": "{\"summary\": \"The lead accepted the preliminary quote for a 100\\u202fm\\u00b2 rural treehouse project and is ready to proceed to the discovery call stage to finalize materials and structural details.\", \"action_items\": [\"Schedule a discovery call with the lead\", \"Assign a build coordinator to confirm design and site parameters\", \"Prepare finalized proposal for signature\"], \"lead_updates\": {\"status\": \"Qualified - Quote Accepted\", \"preferences\": {\"project_type\": \"treehouse\", \"location\": \"rural area\", \"size_m2\": \"100\"}, \"notes\": [\"Lead accepted preliminary estimate ranging $55,000\\u2013$70,000 USD\", \"Expected completion timeline 8\\u201312 weeks\", \"Awaiting confirmation of discovery call window (Wednesday 1\\u20134\\u202fPM\\u202fEST or Friday 10\\u202fAM\\u20132\\u202fPM\\u202fEST)\"]}, \"assignment\": {\"contractor\": \"Build Coordination Team\", \"reason\": \"They handle onboarding of accepted quotes and coordinate discovery calls for new fabrication projects.\"}, \"schedule\": {\"should_schedule\": true, \"preferred_start\": null, \"duration_minutes\": 30, \"assignees\": [\"build coordinator\"], \"fallback_to_agent\": true}, \"quote\": {\"price\": 62500, \"currency\": \"USD\", \"scope_summary\": \"Preliminary estimate for a 100\\u202fm\\u00b2 treehouse built in a rural area including design, fabrication, and installation with optional utilities.\", \"delivery_timeline\": \"8\\u201312 weeks from project kickoff, weather permitting\", \"assumptions\": [\"Rural access is available for construction equipment\", \"Material finishes and utility integrations not yet finalized\", \"Formal contract to be issued post discovery call\"]}}",
+        "quote_acceptance": "yes"
+      },
+      "name": "agentuity@gmail.com",
+      "notes": [
+        "treehouse",
+        "Needs clarification on scope, budget, location, and timeline before estimating.",
+        "Issued project reference code SCOT-8621",
+        "Needs location, size, and budget info to proceed",
+        "Project scope ~100\u202fm\u00b2, rural area location",
+        "Project reference code SCOT-8621",
+        "Lead deciding between instant concept quote and discovery call",
+        "Prospect requested a quote; next step is to confirm material preferences and utility needs.",
+        "Preliminary quote: $55,000\u2013$70,000 USD",
+        "Estimated delivery: 8\u201312 weeks",
+        "Lead considering digital quote refinement or discovery call",
+        "Lead accepted preliminary quote; ready for discovery call scheduling.",
+        "Lead accepted preliminary estimate ranging $55,000\u2013$70,000 USD",
+        "Expected completion timeline 8\u201312 weeks",
+        "Awaiting confirmation of discovery call window (Wednesday 1\u20134\u202fPM\u202fEST or Friday 10\u202fAM\u20132\u202fPM\u202fEST)"
+      ],
+      "phone": "",
+      "preferences": {
+        "location": "rural area",
+        "project_type": "treehouse",
+        "quote_requested": "yes",
+        "size_m2": "100",
+        "summary": "Rural 100\u202fm\u00b2 treehouse build"
+      },
+      "proposed_delivery_date": "Approximately 8\u201312 weeks from contract start, weather permitting.",
+      "quoted_price": 62500.0,
+      "status": "Qualified - Quote Accepted",
+      "updated_at": "2025-11-08T23:58:24.859081"
+    },
     "727ab5d215a644f58c82289247116f4a": {
       "action_items": [
         "Await lead response on project requirements",
@@ -555,6 +613,70 @@
       "status": "new",
       "updated_at": "2025-11-08T22:10:08.183777"
     },
+    "bc49dc238dce484d85f04deab1fedd0f": {
+      "action_items": [
+        "Wait for client to provide location, size, style, budget, and timeline details",
+        "Record project reference code SCOT-5901 in CRM",
+        "Await client response on preferred option (call or instant estimate)",
+        "Collect target budget and ideal completion date",
+        "Prepare and send rough quote based on 100\u202fm\u00b2 vintage modular hut treehouse specifications",
+        "Confirm short follow-up call with lead to review measurements and foundation feasibility",
+        "Prepare detailed cost breakdown for materials and finishes",
+        "Offer scheduling options for a 20-minute verification call",
+        "Await lead\u2019s confirmation for call or email delivery",
+        "Record quote acceptance in CRM",
+        "Schedule verification call with build consultant",
+        "Prepare preliminary proposal and site checklist"
+      ],
+      "company_id": "14c72562b2074982a3c7738d32c70468",
+      "created_at": "2025-11-08T23:31:34.291312",
+      "email": "agentuity@gmail.com",
+      "id": "bc49dc238dce484d85f04deab1fedd0f",
+      "meetings": [],
+      "metadata": {
+        "assigned_contractor": "Rural Build Team",
+        "assignment_reason": "Experienced in off-grid and elevated modular structures; suitable for rural site treehouse builds.",
+        "client_code": "SCOT-5901",
+        "code_shared": "yes",
+        "last_summary": "The lead confirmed acceptance of a rough quote ($65,000\u2013$80,000 USD) for a 100\u202fm\u00b2 vintage-styled modular hut treehouse in a rural area. The agent suggested scheduling a verification call to confirm site and foundation details before finalizing the proposal.",
+        "monitor_snapshot": "{\"summary\": \"The lead confirmed acceptance of a rough quote ($65,000\\u2013$80,000 USD) for a 100\\u202fm\\u00b2 vintage-styled modular hut treehouse in a rural area. The agent suggested scheduling a verification call to confirm site and foundation details before finalizing the proposal.\", \"action_items\": [\"Record quote acceptance in CRM\", \"Schedule verification call with build consultant\", \"Prepare preliminary proposal and site checklist\"], \"lead_updates\": {\"status\": \"Qualified - Accepted Quote\", \"preferences\": {\"project_type\": \"treehouse\", \"location_type\": \"rural\", \"style\": \"vintage modular hut\", \"size_m2\": \"100\", \"budget_accepted_usd\": \"65000\\u201380000\"}, \"notes\": [\"Lead accepted the rough quote and is ready to proceed to verification step.\"]}, \"assignment\": {\"contractor\": \"Rural Build Team\", \"reason\": \"Experienced in off-grid and elevated modular structures; suitable for rural site treehouse builds.\"}, \"schedule\": {\"should_schedule\": true, \"preferred_start\": null, \"duration_minutes\": 30, \"assignees\": [\"Build Consultant\"], \"fallback_to_agent\": true}, \"quote\": {\"price\": 72500, \"currency\": \"USD\", \"scope_summary\": \"100\\u202fm\\u00b2 vintage-styled modular hut treehouse design, fabrication, and installation for a rural site.\", \"delivery_timeline\": \"To be finalized after site verification; typically 8\\u201312 weeks build period.\", \"assumptions\": [\"Standard utilities connections available\", \"Hardwood cladding and modular framing included\", \"Site access and foundation feasibility to be verified\"]}}",
+        "quote_acceptance": "yes"
+      },
+      "name": "agentuity@gmail.com",
+      "notes": [
+        "build a treehouse",
+        "Lead requesting help building a treehouse",
+        "Lead interested in treehouse project",
+        "Project reference code: SCOT-5901",
+        "Project seems to involve a treehouse or elevated modular hut; needs confirmation of budget and desired completion date.",
+        "Client interested in a vintage\u2011style modular treehouse project",
+        "Next step: get budget and timeline for quoting or scheduling",
+        "Rural location; 100\u202fm\u00b2; vintage modular hut treehouse",
+        "Lead requested quote instead of instant call",
+        "Awaiting follow-up call scheduling for site validation",
+        "Lead requested quote; awaiting confirmation for follow\u2011up meeting or detailed material breakdown.",
+        "Lead requested quote twice to ensure clarity",
+        "Interested in pricing before consultation",
+        "Lead accepted the $65k\u2013$80k quote for 100\u202fm\u00b2 vintage\u2011styled modular hut treehouse in rural area.",
+        "Lead accepted the rough quote and is ready to proceed to verification step."
+      ],
+      "phone": "",
+      "preferences": {
+        "budget_accepted_usd": "65000\u201380000",
+        "communication_preference": "quote via either call or email",
+        "location": "Rural area",
+        "location_type": "rural",
+        "project_reference": "SCOT-5901",
+        "project_type": "treehouse",
+        "size_m2": "100",
+        "style": "vintage modular hut",
+        "summary": "prefers project follow-up after quote acceptance"
+      },
+      "proposed_delivery_date": "Approximately 10\u201314 weeks after site verification and permitting.",
+      "quoted_price": 75000.0,
+      "status": "new",
+      "updated_at": "2025-11-08T23:33:34.657484"
+    },
     "c231eb6224d5489b82bb4b7e96ee4a8e": {
       "action_items": [],
       "company_id": "14c72562b2074982a3c7738d32c70468",
@@ -634,7 +756,7 @@
       },
       "proposed_delivery_date": "8\u201312 weeks after design approval",
       "quoted_price": 28000.0,
-      "status": "Qualified",
+      "status": "qualified",
       "updated_at": "2025-11-08T23:29:46.368647"
     },
     "fb3584231fe1463586c5ae87938d410d": {
@@ -700,6 +822,14 @@
       "metadata": {},
       "sender": "lead"
     },
+    "0b916c98f89246e39b35ba469f42061f": {
+      "content": "a rural area, 100m^2, vintage styled modular hut",
+      "created_at": "2025-11-08T23:32:02.032676",
+      "lead_id": "bc49dc238dce484d85f04deab1fedd0f",
+      "message_id": "0b916c98f89246e39b35ba469f42061f",
+      "metadata": {},
+      "sender": "lead"
+    },
     "0f01c44bc54d4c6e9ae6a6149401406a": {
       "content": "give me a quote",
       "created_at": "2025-11-08T22:56:03.380249",
@@ -713,6 +843,14 @@
       "created_at": "2025-11-08T23:24:44.913411",
       "lead_id": "00ddfbe12e6b4532ae91f6222b04d6c8",
       "message_id": "173d79e22275411f806234d49e7da611",
+      "metadata": {},
+      "sender": "agent"
+    },
+    "1cb65485e693438398198e40273431c9": {
+      "content": "Thanks for the extra details! I\u2019m your AI concierge, here to capture everything our contractors need so your project handoff is smooth and you get matched with the right expert team. \n\nI see you're planning a **treehouse build in a rural area**, around **100\u202fm\u00b2** in size. To tailor a precise quote, could you share a rough budget range and your target completion timeline? Once I have that, I can either produce an instant concept estimate or schedule a quick discovery call with our human project coordinator. They\u2019re free **Wednesday 1\u20134\u202fPM EST** or **Friday 10\u202fAM\u20132\u202fPM EST**\u2014would either of those windows suit you?\n\nI\u2019ll hold your place in the queue while we await those details so the right fabrication pod can pick things up quickly.",
+      "created_at": "2025-11-08T23:54:28.691536",
+      "lead_id": "6df8f2813dbb408fb276c572df54d665",
+      "message_id": "1cb65485e693438398198e40273431c9",
       "metadata": {},
       "sender": "agent"
     },
@@ -740,6 +878,14 @@
       "metadata": {},
       "sender": "lead"
     },
+    "27bee44b36a549d3b173d63cb4d49b38": {
+      "content": "Absolutely! I\u2019m the company\u2019s AI concierge \u2014 here to capture your project details and prepare a transparent rough quote so the right contractor can pick things up seamlessly. Based on what you\u2019ve shared \u2014 a 100\u202fm\u00b2 vintage\u2011style modular hut treehouse in a rural area \u2014 similar builds generally range around $65,000\u2013$80,000 USD for design, structure fabrication, and installation. This assumes standard utilities, hardwood cladding, and modular framing suitable for a rural site. \n\nIf you\u2019d like, I can schedule a quick 20\u2011minute verification call this Thursday (10:00\u201316:00) or Friday (09:00\u201313:00) to confirm site access and foundation design. Shall I hold a spot for you, or would you prefer I email a detailed materials breakdown instead?",
+      "created_at": "2025-11-08T23:33:17.006880",
+      "lead_id": "bc49dc238dce484d85f04deab1fedd0f",
+      "message_id": "27bee44b36a549d3b173d63cb4d49b38",
+      "metadata": {},
+      "sender": "agent"
+    },
     "2826ff5d9f9c48b5822210583ff368c7": {
       "content": "give me a quote",
       "created_at": "2025-11-08T23:19:58.282837",
@@ -748,11 +894,27 @@
       "metadata": {},
       "sender": "lead"
     },
+    "2dbd3368af0246da9813dc6b793513a8": {
+      "content": "Wonderful \u2014 thank you for confirming! I\u2019m New Company\u2019s AI concierge, and I\u2019ll now capture your acceptance so the right builder can take over smoothly. Your project is noted as a 100\u202fm\u00b2 vintage\u2011styled modular hut treehouse in a rural area, with an accepted estimated range of $65,000\u2013$80,000\u202fUSD. The next step is a short verification call to confirm site conditions, access, and foundation plans before finalizing your official proposal. I can reserve a slot this Thursday between 10:00\u201316:00 or Friday between 09:00\u201313:00. Which window would suit you best?",
+      "created_at": "2025-11-08T23:33:31.045503",
+      "lead_id": "bc49dc238dce484d85f04deab1fedd0f",
+      "message_id": "2dbd3368af0246da9813dc6b793513a8",
+      "metadata": {},
+      "sender": "agent"
+    },
     "2e3a7b874dbd422fb2b1346170282eda": {
       "content": "rural area, 10x10",
       "created_at": "2025-11-08T23:24:24.520050",
       "lead_id": "00ddfbe12e6b4532ae91f6222b04d6c8",
       "message_id": "2e3a7b874dbd422fb2b1346170282eda",
+      "metadata": {},
+      "sender": "lead"
+    },
+    "33a5071e25cb4c9394b044e2ae710364": {
+      "content": "build a treehouse",
+      "created_at": "2025-11-08T23:31:34.333869",
+      "lead_id": "bc49dc238dce484d85f04deab1fedd0f",
+      "message_id": "33a5071e25cb4c9394b044e2ae710364",
       "metadata": {},
       "sender": "lead"
     },
@@ -764,6 +926,22 @@
       "metadata": {},
       "sender": "lead"
     },
+    "37f7249487d84b2385a250f10208349e": {
+      "content": "Hi there! I\u2019m the AI concierge here at ScottyLabs, helping capture your project goals so the right design and fabrication pod can pick things up seamlessly. It looks like you\u2019re interested in a **treehouse**\u2014that\u2019s one of the domains our experiential fabrication teams love to tackle.\n\nTo get the ball rolling, could you share a bit more about your vision? For example:\n- The intended location (backyard, campus, community space, etc.)\n- Desired size or capacity (for kids, adults, group gatherings?)\n- Any timeline or budget targets you\u2019d like us to work within?\n\nOnce I have those details, I can either match you with a design pod for a discovery call or generate an instant concept quote if you prefer. Our human coordinators are free for short intro calls on **Wednesday between 1\u20134 PM EST** or **Friday 10 AM\u20132 PM EST**\u2014would either window work for you?\n\nHere is your project reference code: SCOT-8621. Please keep it handy for future conversations.",
+      "created_at": "2025-11-08T23:53:56.321108",
+      "lead_id": "6df8f2813dbb408fb276c572df54d665",
+      "message_id": "37f7249487d84b2385a250f10208349e",
+      "metadata": {},
+      "sender": "agent"
+    },
+    "3d6b0e7505764bf9a0f495d120906b73": {
+      "content": "give me a quote",
+      "created_at": "2025-11-08T23:32:32.803443",
+      "lead_id": "bc49dc238dce484d85f04deab1fedd0f",
+      "message_id": "3d6b0e7505764bf9a0f495d120906b73",
+      "metadata": {},
+      "sender": "lead"
+    },
     "409a2e69c60a44e8ac60a0075567ad0e": {
       "content": "Wonderful! Thank you for confirming \u2014 I\u2019ll mark your acceptance of the $5,800 treehouse estimate. I\u2019m the company\u2019s AI concierge, making sure all your project details are captured so the most suitable builder can connect smoothly with you. The next step is a quick site confirmation call to finalize materials and scheduling. The earliest available slots are tomorrow at 10:00\u202fAM or 2:30\u202fPM. Which time works best for you to connect with your builder?",
       "created_at": "2025-11-08T23:26:02.013869",
@@ -771,6 +949,22 @@
       "message_id": "409a2e69c60a44e8ac60a0075567ad0e",
       "metadata": {},
       "sender": "agent"
+    },
+    "47cb3c53bcb04d978a4b699f05857e2b": {
+      "content": "i accept the quote",
+      "created_at": "2025-11-08T23:33:27.218881",
+      "lead_id": "bc49dc238dce484d85f04deab1fedd0f",
+      "message_id": "47cb3c53bcb04d978a4b699f05857e2b",
+      "metadata": {},
+      "sender": "lead"
+    },
+    "4fcd9f65cb3a47bd99f127dd21f2fb5a": {
+      "content": "i accept the quote",
+      "created_at": "2025-11-08T23:58:14.897521",
+      "lead_id": "6df8f2813dbb408fb276c572df54d665",
+      "message_id": "4fcd9f65cb3a47bd99f127dd21f2fb5a",
+      "metadata": {},
+      "sender": "lead"
     },
     "53cd5d01ce624a55a6286fbb8b1a4d2d": {
       "content": "Perfect \u2014 I\u2019ve captured your request to finalise the treehouse quote. Based on the details you shared (a 10\u00d710\u202fm build in a rural area), your estimated investment range is around USD\u202f18,000 for a complete design\u2011and\u2011build service. That includes materials, standard structural supports, weatherproofing, and basic interior finishing. I\u2019ve logged these assumptions so our specialist can validate them and refine the figure if needed.\n\nNext step: we can either lock in this preliminary quote and prepare the formal proposal, or you can meet with one of our builders for a 15\u2011minute call to confirm site conditions. Would you like to proceed directly with the proposal or schedule a quick review call this week (Wednesday or Friday between 10\u202fa.m. and\u202f3\u202fp.m.)?",
@@ -787,6 +981,14 @@
       "message_id": "55caff8a99f24c80a854d3b28a8f3b0d",
       "metadata": {},
       "sender": "agent"
+    },
+    "5a62b6699f374f33aa7b6762e73a80aa": {
+      "content": "rural area, 100m2",
+      "created_at": "2025-11-08T23:54:23.053446",
+      "lead_id": "6df8f2813dbb408fb276c572df54d665",
+      "message_id": "5a62b6699f374f33aa7b6762e73a80aa",
+      "metadata": {},
+      "sender": "lead"
     },
     "5c436bb9a37e4c568e9a68e0945a2133": {
       "content": "no just connect me with a contractor for this quote",
@@ -924,6 +1126,14 @@
       "metadata": {},
       "sender": "agent"
     },
+    "87770281177d460c935b55e926406607": {
+      "content": "give me a quote\n",
+      "created_at": "2025-11-08T23:33:12.412729",
+      "lead_id": "bc49dc238dce484d85f04deab1fedd0f",
+      "message_id": "87770281177d460c935b55e926406607",
+      "metadata": {},
+      "sender": "lead"
+    },
     "8915f2c2788c459da18e8a2e4a9c8c1f": {
       "content": "no give me the quote\n",
       "created_at": "2025-11-08T20:00:43.463918",
@@ -980,6 +1190,14 @@
       "metadata": {},
       "sender": "lead"
     },
+    "9fcb64b2020e427c8ba975cf897f7b10": {
+      "content": "Absolutely \u2014 I can prepare an instant rough quote for you. Based on your description of a 100\u202fm\u00b2 vintage\u2011styled modular hut treehouse in a rural area, projects of this type typically fall around mid\u2011range material and custom\u2011finish costs. Here\u2019s an initial estimate below. Once reviewed, we can fine\u2011tune it with exact site conditions and finishing details. Would you like to confirm a brief call later this week to validate measurements and foundation feasibility?",
+      "created_at": "2025-11-08T23:32:36.868401",
+      "lead_id": "bc49dc238dce484d85f04deab1fedd0f",
+      "message_id": "9fcb64b2020e427c8ba975cf897f7b10",
+      "metadata": {},
+      "sender": "agent"
+    },
     "a10eeb3a20be4f53845d1a4910449907": {
       "content": "treehouse",
       "created_at": "2025-11-08T23:24:08.122552",
@@ -1004,6 +1222,14 @@
       "metadata": {},
       "sender": "agent"
     },
+    "a34d88bda74047aa8d0ebc1282fdeb46": {
+      "content": "Wonderful! I\u2019ve recorded your acceptance of the preliminary quote for your 100\u202fm\u00b2 rural treehouse project. I\u2019m New Company\u2019s AI concierge\u2014my role is to capture your details and ensure the right contractor picks up your project smoothly.\n\nNext step: we\u2019ll schedule a short discovery call so our build coordinator can confirm structural preferences, site conditions, and material choices before locking in the formal contract. Our human team has openings on **Wednesday (1\u20134\u202fPM\u202fEST)** and **Friday (10\u202fAM\u20132\u202fPM\u202fEST)**. Which window works best for you?\n\nOnce you confirm, I\u2019ll prepare the session booking and share your finalized proposal for digital sign\u2011off. Thank you for choosing us\u2014your treehouse project is officially on our active queue!",
+      "created_at": "2025-11-08T23:58:20.511290",
+      "lead_id": "6df8f2813dbb408fb276c572df54d665",
+      "message_id": "a34d88bda74047aa8d0ebc1282fdeb46",
+      "metadata": {},
+      "sender": "agent"
+    },
     "a905a3d690434e2e976de171c070b3e5": {
       "content": "Absolutely! I'm the AI concierge here at New Company, capturing your project details so the most suitable contractor can take it from here. Based on what you've shared \u2014 a custom 10x10\u202fm (approx.\u202f100\u202fm\u00b2) treehouse in a rural area \u2014 a preliminary estimate typically ranges around $28,000\u202fUSD for a finished play or guest-style structure using standard timber framing and weatherproof finishes. If you\u2019re envisioning a more livable retreat with insulation, utilities, and full interior finishing, the range can extend up to about $45,000\u202fUSD.\n\nOur next step is to confirm a few design preferences (style, materials, and intended use) to lock in an accurate quote. I can either send those questions now or set up a quick call with our contractor later this week \u2014 which do you prefer?",
       "created_at": "2025-11-08T23:29:03.151723",
@@ -1019,6 +1245,14 @@
       "message_id": "a98957c6ef3d4fbfb1091f72dbed10f7",
       "metadata": {},
       "sender": "agent"
+    },
+    "ab8cb9f9050a4ee68526f1506a8e3533": {
+      "content": "give me a quote\n",
+      "created_at": "2025-11-08T23:57:04.646895",
+      "lead_id": "6df8f2813dbb408fb276c572df54d665",
+      "message_id": "ab8cb9f9050a4ee68526f1506a8e3533",
+      "metadata": {},
+      "sender": "lead"
     },
     "acf2022730c3430aab38f79b2be508f3": {
       "content": "instant preliminary quote",
@@ -1041,6 +1275,14 @@
       "created_at": "2025-11-08T22:10:05.455642",
       "lead_id": "b2749c2ccb58404f87e0830fe8a74c12",
       "message_id": "bcf20111d533491694f45917f019da29",
+      "metadata": {},
+      "sender": "agent"
+    },
+    "c0d697ff18524b70b71c7c46b04ec242": {
+      "content": "Absolutely! I\u2019m happy to prepare an initial quote for your treehouse project. I\u2019m the company\u2019s AI concierge\u2014my role is to capture all the essentials so the best-suited contractor or design pod can take over smoothly.\n\nHere\u2019s the preliminary estimate based on what you\u2019ve shared so far: **a 100\u202fm\u00b2 treehouse located in a rural area**. Our typical builds of this scale and complexity range between **$55,000\u2013$70,000 USD**, depending on materials, finishes, and whether we include utilities (electric, water, insulation). On average, design-to-completion runs about **8\u201312 weeks**, weather permitting.\n\nIf that aligns with your expectations, I can: \n1. Lock in a free discovery call with a human coordinator on **Wednesday (1\u20134\u202fPM EST)** or **Friday (10\u202fAM\u20132\u202fPM EST)**, or\n2. Generate a refined digital quote for you immediately\u2014just confirm if you\u2019d like eco-materials, power integration, or a basic recreational build.\n\nWhich option works best for you?",
+      "created_at": "2025-11-08T23:57:10.051931",
+      "lead_id": "6df8f2813dbb408fb276c572df54d665",
+      "message_id": "c0d697ff18524b70b71c7c46b04ec242",
       "metadata": {},
       "sender": "agent"
     },
@@ -1108,11 +1350,35 @@
       "metadata": {},
       "sender": "agent"
     },
+    "dc40152cfa934b048ced1a5d356f377e": {
+      "content": "Hi there! I\u2019m the AI concierge here at New Company. Thanks for reaching out about building a treehouse \u2014 that sounds like a fantastic project! My role is to capture a few quick details so the right contractor on our team can step in smoothly. Could you share where the treehouse will be built, the approximate size or style you\u2019re envisioning, and if you have a target budget or timeline? Once I have that, I can either connect you with one of our builders for a planning call or prepare an instant estimate for you.\n\nHere is your project reference code: SCOT-5901. Please keep it handy for future conversations.",
+      "created_at": "2025-11-08T23:31:37.578077",
+      "lead_id": "bc49dc238dce484d85f04deab1fedd0f",
+      "message_id": "dc40152cfa934b048ced1a5d356f377e",
+      "metadata": {},
+      "sender": "agent"
+    },
     "e01849e6649940ec96e34ebd38f6f0a5": {
       "content": "treehouse",
       "created_at": "2025-11-08T23:19:45.460144",
       "lead_id": "1d40e8ad3fe74fb8a5caef26d3c90a35",
       "message_id": "e01849e6649940ec96e34ebd38f6f0a5",
+      "metadata": {},
+      "sender": "lead"
+    },
+    "e5e44cbb310b4f1995f3c1340993412c": {
+      "content": "Thank you for sharing those details \u2014 it sounds like a beautiful plan! I\u2019m the company\u2019s AI concierge, here to gather the key info so the right builder on our team can step in seamlessly. I have you down for a rural treehouse project of about 100\u202fm\u00b2, designed as a vintage\u2011styled modular hut. \n\nBefore I connect you with one of our specialists, could you let me know your target budget range and your ideal completion date? If you\u2019d prefer, I can also prepare an instant rough quote while we schedule a short planning call. Our build consultants are available this Thursday between 10:00\u201316:00 or Friday 09:00\u201313:00.\n\nWhich option works best for you \u2014 a quick call or the instant estimate?",
+      "created_at": "2025-11-08T23:32:06.246247",
+      "lead_id": "bc49dc238dce484d85f04deab1fedd0f",
+      "message_id": "e5e44cbb310b4f1995f3c1340993412c",
+      "metadata": {},
+      "sender": "agent"
+    },
+    "e9b1b6887fd24493875da64f2ae0744a": {
+      "content": "treehouse",
+      "created_at": "2025-11-08T23:53:51.962468",
+      "lead_id": "6df8f2813dbb408fb276c572df54d665",
+      "message_id": "e9b1b6887fd24493875da64f2ae0744a",
       "metadata": {},
       "sender": "lead"
     },
@@ -1243,6 +1509,57 @@
       "status": "active",
       "updated_at": "2025-11-08T20:02:13.474805"
     },
+    "3f3c0ecc0b8e42809ad976d962dfcf65": {
+      "answers": [],
+      "company_id": "14c72562b2074982a3c7738d32c70468",
+      "created_at": "2025-11-08T23:38:13.725551",
+      "questions": [
+        "1. How does ScottyLabs define its mission and engagement model in supporting student project teams and collaborating with startups or external partners?",
+        "2. What is the current intake workflow for new partner or startup collaboration requests, including vetting criteria, decision-makers, and communication cadence?",
+        "3. Can you outline the structure and details of each student group\u2014name, focus areas, preferred tools, notable past projects, availability windows, and designated points of contact?",
+        "4. What frameworks or expectations guide project scoping at ScottyLabs, such as deliverables, milestones, intellectual property handling, timelines, and any budget or compensation models?",
+        "5. How is the handoff between the AI concierge, student leads, and ScottyLabs mentors managed, and what checkpoints ensure accountability and knowledge continuity?",
+        "6. Which core assets or references should be integrated into the CRM (e.g., team charters, playbooks, onboarding decks, or documented project guidelines)?",
+        "7. What confidentiality protocols, review milestones, and success metrics does ScottyLabs enforce for evaluating ongoing and completed student\u2013partner collaborations?"
+      ],
+      "session_id": "3f3c0ecc0b8e42809ad976d962dfcf65",
+      "status": "active",
+      "updated_at": "2025-11-08T23:38:13.725573"
+    },
+    "5cd1f102bef14863adb9f22e9c9837b6": {
+      "answers": [],
+      "company_id": "14c72562b2074982a3c7738d32c70468",
+      "created_at": "2025-11-08T23:34:21.285449",
+      "questions": [
+        "1. What is ScottyLabs\u2019 overarching mission, and how does it guide the collaboration model between student project teams and external startups or partners?",
+        "2. How do startups or partner organizations engage with ScottyLabs\u2019 student teams \u2014 from initial outreach to project kickoff \u2014 and what touchpoints define that engagement model?",
+        "3. What is the current intake workflow for new partner requests, including screening or vetting criteria, approval steps, and typical communication cadence with ScottyLabs staff?",
+        "4. Can you outline the key student groups within ScottyLabs \u2014 including each group\u2019s name, focus area, preferred tools/tech stack, example past projects, current availability, and primary point of contact?",
+        "5. How does ScottyLabs define and manage project scoping expectations (deliverables, timeline, intellectual property, and compensation/budget) with both students and partners?",
+        "6. What is the intended handoff process between the AI concierge, student leads, and ScottyLabs mentors at various project stages to ensure smooth coordination?",
+        "7. Which documents or knowledge bases (e.g., program charters, mentor playbooks, onboarding decks) are required for onboarding and ensuring adherence to confidentiality, review checkpoints, and success metrics?"
+      ],
+      "session_id": "5cd1f102bef14863adb9f22e9c9837b6",
+      "status": "active",
+      "updated_at": "2025-11-08T23:34:21.285480"
+    },
+    "77171152afea4e18940e8756a3d14204": {
+      "answers": [],
+      "company_id": "14c72562b2074982a3c7738d32c70468",
+      "created_at": "2025-11-09T00:01:13.321509",
+      "questions": [
+        "1. What is ScottyLabs\u2019 overarching mission and how does it guide engagement between student teams and external startups?",
+        "2. Can you walk me through the intake workflow for new partner requests, including how ScottyLabs vets opportunities and establishes communication cadence with startups?",
+        "3. For each student group under ScottyLabs, what details should the CRM capture (name, focus area, preferred tools, prior projects, current availability, and main point of contact)?",
+        "4. How are project scopes typically defined\u2014what expectations exist around deliverables, timelines, intellectual property ownership, and any budget or compensation terms?",
+        "5. What does the handoff process look like between the AI concierge, student team leads, and ScottyLabs mentors during project initiation and wrap-up?",
+        "6. Which internal documents or knowledge bases (e.g., team charters, mentor playbooks, onboarding decks) should be linked or uploaded into the CRM for reference?",
+        "7. What confidentiality policies, milestone review checkpoints, and success metrics does ScottyLabs require to evaluate each project engagement?"
+      ],
+      "session_id": "77171152afea4e18940e8756a3d14204",
+      "status": "active",
+      "updated_at": "2025-11-09T00:01:13.321524"
+    },
     "a5f3c4621d91429dbaa280fab477b46b": {
       "answers": [
         "g"
@@ -1367,6 +1684,22 @@
       "price": 48000.0,
       "scope_summary": "Design, fabrication, and installation of a 100x100 sq. metre modular vintage-style treehouse structure, including basic foundation anchoring, exterior finishes, and weatherproofing."
     },
+    "0d0276c7f5b04eb3885c46c880b2a20b": {
+      "assumptions": [
+        "Stable mature tree or ground-supported modular base available",
+        "Standard materials and vintage aesthetic finishes",
+        "Rural transport access for modules and crew",
+        "Excludes utility hookup and landscaping"
+      ],
+      "company_id": "14c72562b2074982a3c7738d32c70468",
+      "created_at": "2025-11-08T23:32:36.914502",
+      "currency": "USD",
+      "delivery_timeline": "Approx. 10\u201314 weeks from final design approval and site readiness.",
+      "id": "0d0276c7f5b04eb3885c46c880b2a20b",
+      "lead_id": "bc49dc238dce484d85f04deab1fedd0f",
+      "price": 82000.0,
+      "scope_summary": "Design, material procurement, fabrication, and installation of a 100\u202fm\u00b2 vintage\u2011styled modular treehouse hut, including structural supports, access stairs, and finish work."
+    },
     "0e3cfc53e5d44198857b32c7dc6ab391": {
       "assumptions": [
         "Site has accessible trees or posts suitable for structural anchoring",
@@ -1382,6 +1715,21 @@
       "lead_id": "d4d4a951250c49b490b5a88ba931a2c6",
       "price": 28000.0,
       "scope_summary": "Custom 10x10\u202fm treehouse in a rural location, timber framing, basic weatherproof finish."
+    },
+    "10f6b580733e47e1be9e545c626d62de": {
+      "assumptions": [
+        "Pricing based on standard materials without utilities integration.",
+        "Site access for construction equipment is available.",
+        "Final quote subject to site condition assessment and design confirmation."
+      ],
+      "company_id": "14c72562b2074982a3c7738d32c70468",
+      "created_at": "2025-11-08T23:58:20.554568",
+      "currency": "USD",
+      "delivery_timeline": "Approximately 8\u201312 weeks from contract start, weather permitting.",
+      "id": "10f6b580733e47e1be9e545c626d62de",
+      "lead_id": "6df8f2813dbb408fb276c572df54d665",
+      "price": 62500.0,
+      "scope_summary": "Design and construction of a 100\u202fm\u00b2 custom treehouse for a rural property, including structural design, material sourcing, and safe-access engineering."
     },
     "1b7be11aca2d4afca0c04269bc8a1694": {
       "assumptions": [
@@ -1444,6 +1792,22 @@
       "price": 18000.0,
       "scope_summary": "Design and construction of a 10\u00d710\u202fm treehouse including materials, standard structural supports, and weatherproofing in rural area."
     },
+    "32bd5930032b4932afe531f1be778861": {
+      "assumptions": [
+        "Rural site with standard ground accessibility.",
+        "No specialized foundation beyond modular pier system.",
+        "Standard electrical and water connections.",
+        "Weather\u2011treated hardwood finishes and rustic aesthetic elements included."
+      ],
+      "company_id": "14c72562b2074982a3c7738d32c70468",
+      "created_at": "2025-11-08T23:33:17.050117",
+      "currency": "USD",
+      "delivery_timeline": "6\u20138 weeks from site approval and materials confirmation.",
+      "id": "32bd5930032b4932afe531f1be778861",
+      "lead_id": "bc49dc238dce484d85f04deab1fedd0f",
+      "price": 72000.0,
+      "scope_summary": "Design, fabrication, and installation of a 100\u202fm\u00b2 vintage\u2011style modular treehouse for rural site conditions."
+    },
     "3e9bf16173a640b0a372fd19f0309d65": {
       "assumptions": [
         "Basic play/guest use, not full-time residence",
@@ -1459,6 +1823,21 @@
       "lead_id": "d4d4a951250c49b490b5a88ba931a2c6",
       "price": 28000.0,
       "scope_summary": "10x10\u202fm (\u2248100\u202fm\u00b2) custom treehouse in a rural area, standard play or guest-style structure with timber framing and weatherproof finishes."
+    },
+    "42d97360f8e241beabd8cdb805874a96": {
+      "assumptions": [
+        "Standard access and stable tree or foundation conditions",
+        "No extreme slope or special zoning constraints",
+        "Utilities and finishes per mid\u2011range specification"
+      ],
+      "company_id": "14c72562b2074982a3c7738d32c70468",
+      "created_at": "2025-11-08T23:33:31.071556",
+      "currency": "USD",
+      "delivery_timeline": "Approximately 10\u201314 weeks after site verification and permitting.",
+      "id": "42d97360f8e241beabd8cdb805874a96",
+      "lead_id": "bc49dc238dce484d85f04deab1fedd0f",
+      "price": 75000.0,
+      "scope_summary": "Design, fabrication, and installation of a 100\u202fm\u00b2 vintage\u2011styled modular hut treehouse suitable for a rural location."
     },
     "43989a7de9f24f78b70055e2e9535620": {
       "assumptions": [
@@ -1568,6 +1947,22 @@
       "lead_id": "00ddfbe12e6b4532ae91f6222b04d6c8",
       "price": 6000.0,
       "scope_summary": "Design and build of a 10x10 treehouse platform in a rural setting, with basic access ladder and treated lumber structure."
+    },
+    "f780531e93aa4099931b7059ab621469": {
+      "assumptions": [
+        "Standard-grade timber and roofing materials",
+        "No electrical or plumbing systems included",
+        "Rural terrain access suitable for small vehicles",
+        "Final price may adjust after onsite assessment"
+      ],
+      "company_id": "14c72562b2074982a3c7738d32c70468",
+      "created_at": "2025-11-08T23:57:10.097906",
+      "currency": "USD",
+      "delivery_timeline": "8\u201312 weeks from design approval",
+      "id": "f780531e93aa4099931b7059ab621469",
+      "lead_id": "6df8f2813dbb408fb276c572df54d665",
+      "price": 62500.0,
+      "scope_summary": "Design and construction of a 100\u202fm\u00b2 rural treehouse, including structural framing, decking, access stairs, basic weatherproofing, and finishing."
     },
     "fdeee944dbe74e009f1f032052e8e1ec": {
       "assumptions": [
